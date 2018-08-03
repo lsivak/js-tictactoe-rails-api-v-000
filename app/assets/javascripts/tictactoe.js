@@ -18,15 +18,20 @@ function doTurn(player) {
 		checkWinner()
 }
 
+function setMessage() {
+	const string = "Player X Won!"
+}
+
 function updateState() {
   var square = document.getElementById("data-x", "data-y");
   square = player(turn);
-var el = document.getElementById("games");
+var el = document.getElementById("squares");
 el.addEventListener("click", () => { updateState(square); }, false);
 }
 
 function checkWinner() {
-	
+	  // let populateBoard = ['', '', '', '', '', '', '', '', '']
+    // populateBoard(['X', 'X', 'X', '', '', '', 'O', 'O', '']);
 }
 
 
