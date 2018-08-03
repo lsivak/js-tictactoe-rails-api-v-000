@@ -15,12 +15,12 @@ window.attachListeners = () => {
 	function doTurn(player) {
 		turn += 1
 	}
-
+}
 function updateState() {
   var square = document.getElementById("data-x", "data-y");
-  square = player(turn);}
+  square = player(turn);
 var el = document.getElementById("games");
 el.addEventListener("click", () => { updateState(square); }, false);
 }
-}
+
 
