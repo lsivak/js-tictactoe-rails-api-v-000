@@ -36,6 +36,8 @@ function checkWinner() {
 
 if (squares[0]==squares[1] && squares[1]==squares[2] || squares[3]==squares[4] && squares[4]==squares[5] || squares[6]==squares[7] && squares[7]==squares[8]) {
 return true;
+turn = 0
+resetFixtures()
 	setMessage()
 }
 }
