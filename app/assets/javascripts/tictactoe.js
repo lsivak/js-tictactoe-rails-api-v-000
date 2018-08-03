@@ -8,7 +8,7 @@ function player(turn) {
 		return 'X';
 	if(turn%2 === false);
 		return 'O';
-	
+
 }
 
 
@@ -23,15 +23,18 @@ function setMessage() {
 }
 
 function updateState() {
-  var square = document.getElementById("data-x", "data-y");
+  const squares = window.document.querySelectorAll('td');
   square = player(turn);
 var el = document.getElementById("games");
-el.addEventListener("click", () => { updateState(square); }, false);
+el.addEventListener("click", () => { updateState(squares); }, false);
+
 }
 
 function checkWinner() {
-	  // let populateBoard = ['', '', '', '', '', '', '', '', '']
-    // populateBoard(['X', 'X', 'X', '', '', '', 'O', 'O', '']);
+	const squares = window.document.querySelectorAll('td')
+
+if(squares[0]==squares[1] && squares[1]==squares[2] || squares[3]==squares[4] && squares[4]==squares[5] || squares[6]==squares[7] && squares[7]==squares[8]);
+return true
+
+	setMessage()
 }
-
-
