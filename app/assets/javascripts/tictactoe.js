@@ -33,15 +33,15 @@ function attachListeners() {
 }
 
 function doTurn(square) {
-	if (turn <=7) {
-		updateState(square)}
-		if (checkWinner() == true) {
-			turn += 1
-	} else {
-		message = "Tie game."
-		setMessage(message)
-		resetFixtures()
-		turn = 0
+		updateState(square)
+		turn++;
+		if (checkWinner()) {
+			saveGame();
+			clearBoard();
+	} else	if (turn === 9) {
+		message = "Tie game.";
+		setMessage(message);
+		clearBoard()
 }
 }
 
@@ -88,10 +88,7 @@ function checkWinner() {
  $('td').text((index, square) => win[index] = square);
  
  gameWinArray.some(function(opt) {
-	if (win[opt[0]] != "" && win[opt[0]] === win[opt[1]] && win[opt[1]] === win[opt[2]]) {
-// if (squares[0].innerHTML==squares[1].innerHTML && squares[1].innerHTML==squares[2].innerHTML || squares[3].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[5].innerHTML || squares[6].innerHTML==squares[7].innerHTML && squares[7].innerHTML==squares[8].innerHTML ||
-// squares[0].innerHTML==squares[3].innerHTML && squares[3].innerHTML==squares[6].innerHTML || squares[1].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[7].innerHTML || squares[2].innerHTML==squares[5].innerHTML && squares[5].innerHTML==squares[8].innerHTML ||
-// squares[0].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[8].innerHTML || squares[2].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[6].innerHTML) {
+if (win[opt[0]] != "" && win[opt[0]] === win[opt[1]] && win[opt[1]] === win[opt[2]]) {
 message = (`Player ${win[opt[0]]} Won!`)
 setMessage(message);
 return winner = true;
