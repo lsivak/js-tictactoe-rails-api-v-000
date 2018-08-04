@@ -36,16 +36,20 @@ function attachListeners() {
 }
 
 function doTurn(player) {
-		turn += 1
+	if (turn <=7) {
 		updateState()
-		checkWinner()
+		if (checkWinner() == true) {
+			turn += 1
+		}
+	} else {
+		message = "Tie game."
+		setMessage(message)
+		resetFixtures()
+}
 }
 
-function setMessage(checkWinner) {
-	if (checkWinner == true) {
-	return "Player #{player} Won!"
-	resetFixtures()
-}
+function setMessage(message) {
+ return message
 }
 function updateState() {
   const squares = window.document.querySelectorAll('td');
@@ -63,16 +67,16 @@ $(".js-save-game").on("click", function(e) {
 
 function checkWinner() {
 	const squares = window.document.querySelectorAll('td')
-// if (tr[0][0] == tr[0][1] == tr[0][2] || tr[1][0] == tr[1][1] == tr[1][2] || tr[2][0] == tr[2][1] == tr[2][2]  ) {
 if (squares[0].innerHTML==squares[1].innerHTML && squares[1].innerHTML==squares[2].innerHTML || squares[3].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[5].innerHTML || squares[6].innerHTML==squares[7].innerHTML && squares[7].innerHTML==squares[8].innerHTML ||
 squares[0].innerHTML==squares[3].innerHTML && squares[3].innerHTML==squares[6].innerHTML || squares[1].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[7].innerHTML || squares[2].innerHTML==squares[5].innerHTML && squares[5].innerHTML==squares[8].innerHTML ||
 squares[0].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[8].innerHTML || squares[2].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[6].innerHTML) {
 
 return true;
-} else {
-	return false;
+message = "Player #{player} Won!"
+setMessage(message);
+ } else {
+return false;
 }
-setMessage()
 }
 
 
