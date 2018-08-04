@@ -31,7 +31,7 @@ function player() {
 }
 }
 function attachListeners() {
-	var el = document.getElementById("squares");
+	var el = document.getElementById("squares[i]");
 	el.addEventListener("click", () => { doTurn(player).innerHTML; }, false);
 }
 
@@ -45,6 +45,7 @@ function doTurn(player) {
 		message = "Tie game."
 		setMessage(message)
 		resetFixtures()
+		turn = 0
 }
 }
 
