@@ -1,10 +1,10 @@
 // Code your JavaScript / jQuery solution here
 
-let player1 = "O"
-let player2 = "X"
-let turn = 0
+let player1 = "X"
+let player2 = "O"
+
 function player(turn) {
-	if (turn%2 === true) {
+	if (turn%2 === 0) {
 		return 'X';
 	} else {
 		return 'O';
@@ -36,8 +36,7 @@ function checkWinner() {
 
 if (squares[0]==squares[1] && squares[1]==squares[2] || squares[3]==squares[4] && squares[4]==squares[5] || squares[6]==squares[7] && squares[7]==squares[8]) {
 return true;
-turn = 0
-resetFixtures()
+
 	setMessage()
 }
 }
