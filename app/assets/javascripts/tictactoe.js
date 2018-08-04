@@ -49,6 +49,7 @@ function doTurn(player) {
 }
 
 function setMessage(message) {
+	document.getElementById('message').innerHTML = message;
  return message
 }
 function updateState() {
@@ -72,7 +73,7 @@ squares[0].innerHTML==squares[3].innerHTML && squares[3].innerHTML==squares[6].i
 squares[0].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[8].innerHTML || squares[2].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[6].innerHTML) {
 
 return true;
-message = "Player #{player} Won!"
+message = "Player #{squares.innerHTML} Won!"
 setMessage(message);
  } else {
 return false;
