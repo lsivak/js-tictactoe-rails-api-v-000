@@ -1,11 +1,13 @@
 // Code your JavaScript / jQuery solution here
+const gameWinArray = [[0,1,2], [3,4,5], [6,7,8], [0,3,6],
+          [1,4,7], [2,5,8], [0,4,8], [2,4,6]];
 const squares = window.document.querySelectorAll('td');
 const messageDiv = window.document.getElementById('message');
 const gamesDiv = window.document.getElementById('games');
 const saveButton = window.document.getElementById('save');
 const previousButton = window.document.getElementById('previous');
 const clearButton = window.document.getElementById('clear');
-
+var currentGame = 0
 function resetFixtures() {
   for (let i = 0; i < 9; i++) {
     squares[i].innerHTML = '';
@@ -66,24 +68,39 @@ $("saveButton").on("click", function() {
 })
 }
 
+function clearBoard() {
+	$('td').remove();
+	turn = 0
+}
+
 $(document).ready(function(){
     $("clearButton").click(function(){
-			if ($(this).val() == "clearButton")
-	        $(this).val("")
-	});
-})
+			if (!currentGame){
+			clearBoard()
+		} else {
+			$(this.squares[i]).remove
+		}	
+			})    
+	})
+	
 function checkWinner() {
-	const squares = window.document.querySelectorAll('td')
-if (squares[0].innerHTML==squares[1].innerHTML && squares[1].innerHTML==squares[2].innerHTML || squares[3].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[5].innerHTML || squares[6].innerHTML==squares[7].innerHTML && squares[7].innerHTML==squares[8].innerHTML ||
-squares[0].innerHTML==squares[3].innerHTML && squares[3].innerHTML==squares[6].innerHTML || squares[1].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[7].innerHTML || squares[2].innerHTML==squares[5].innerHTML && squares[5].innerHTML==squares[8].innerHTML ||
-squares[0].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[8].innerHTML || squares[2].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[6].innerHTML) {
-
-return true;
-message = "Player #{squares.innerHTML} Won!"
+	var win = {}
+	var winner = false;
+ $('td').text((index, square) => win[index] = square);
+ 
+ gameWinArray.some(function(opt) {
+	if (win[opt[0]] != "" && win[opt[0]] === win[opt[1]] && win[opt[1]] === win[opt[2]]) {
+// if (squares[0].innerHTML==squares[1].innerHTML && squares[1].innerHTML==squares[2].innerHTML || squares[3].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[5].innerHTML || squares[6].innerHTML==squares[7].innerHTML && squares[7].innerHTML==squares[8].innerHTML ||
+// squares[0].innerHTML==squares[3].innerHTML && squares[3].innerHTML==squares[6].innerHTML || squares[1].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[7].innerHTML || squares[2].innerHTML==squares[5].innerHTML && squares[5].innerHTML==squares[8].innerHTML ||
+// squares[0].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[8].innerHTML || squares[2].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[6].innerHTML) {
+message = (`Player ${win[opt[0]]} Won!`)
 setMessage(message);
- } else {
-return false;
+return winner = true;
 }
+});
+
+return winner;
 }
+
 
 
