@@ -34,10 +34,9 @@ function attachListeners() {
 
 function doTurn(square) {
 	if (turn <=7) {
-		updateState(square)
+		updateState(square)}
 		if (checkWinner() == true) {
 			turn += 1
-		}
 	} else {
 		message = "Tie game."
 		setMessage(message)
@@ -98,7 +97,6 @@ setMessage(message);
 return winner = true;
 }
 });
-
 return winner;
 }
 
