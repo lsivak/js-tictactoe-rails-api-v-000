@@ -23,21 +23,16 @@ function populateBoard(arr) {
 }
 
 
-function player() {
-	if (turn%2 === 0) {
-		return 'X';
-	} else {
-		return 'O';
-}
-}
+var player = () => turn % 2 ? 'O' : 'X';
+
 function attachListeners() {
 	var el = document.getElementById("squares[i]");
-	el.addEventListener("click", () => { doTurn(player).innerHTML; }, false);
+	el.addEventListener("click", () => { doTurn(player); }, false);
 }
 
-function doTurn(player) {
+function doTurn(square) {
 	if (turn <=7) {
-		updateState()
+		updateState(square)
 		if (checkWinner() == true) {
 			turn += 1
 		}
@@ -57,16 +52,26 @@ function updateState() {
   const squares = window.document.querySelectorAll('td');
   square = player();
 var el = document.getElementById("games");
-el.addEventListener("click", () => { updateState(squares[i]).innerHTML; }, false);
+el.addEventListener("click", () => { squares[i].innerHTML= this.player(); }, false);
+
 
 $(document).ready (function () {
-$(".js-save-game").on("click", function(e) { 
-  alert('listener for game, "game saved"');
+$("saveButton").on("click", function() { 
+  var gameId=parseInt($("saveButton").attr("data-id")) + 1;
+	$.getJSON("/games/" + gameId + ".json", function(data) {
+	$(".state").text(data["state"]);
+	 $("saveButton").attr("data-id", data["id"]);
+})
 })
 })
 }
 
-
+$(document).ready(function(){
+    $("clearButton").click(function(){
+			if ($(this).val() == "clearButton")
+	        $(this).val("")
+	});
+})
 function checkWinner() {
 	const squares = window.document.querySelectorAll('td')
 if (squares[0].innerHTML==squares[1].innerHTML && squares[1].innerHTML==squares[2].innerHTML || squares[3].innerHTML==squares[4].innerHTML && squares[4].innerHTML==squares[5].innerHTML || squares[6].innerHTML==squares[7].innerHTML && squares[7].innerHTML==squares[8].innerHTML ||
