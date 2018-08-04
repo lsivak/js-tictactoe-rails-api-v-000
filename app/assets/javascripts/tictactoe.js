@@ -1,44 +1,24 @@
 // Code your JavaScript / jQuery solution here
 const gameWinArray = [[0,1,2], [3,4,5], [6,7,8], [0,3,6],
           [1,4,7], [2,5,8], [0,4,8], [2,4,6]];
-const squares = window.document.querySelectorAll('td');
-const messageDiv = window.document.getElementById('message');
-const gamesDiv = window.document.getElementById('games');
-const saveButton = window.document.getElementById('save');
-const previousButton = window.document.getElementById('previous');
-const clearButton = window.document.getElementById('clear');
+
 var currentGame = 0
-function resetFixtures() {
-  for (let i = 0; i < 9; i++) {
-    squares[i].innerHTML = '';
-  }
-}
-  window.turn *= 0;
-  messageDiv.innerHTML = '';
-  gamesDiv.innerHTML = '';
-
-
-function populateBoard(arr) {
-  for (let i = 0; i < 9; i++) {
-    squares[i].innerHTML = arr[i];
-  }
-}
-
-
+var turn = 0
 var player = () => turn % 2 ? 'O' : 'X';
 
 function attachListeners() {
-	var el = document.getElementById("td");
-	el.addEventListener("click", () => { doTurn(square); }, false);
+	// var el = document.getElementById("td");
+	// el.addEventListener("click", () => {
 
 	$('#save').on('click', () => saveGame());
 	$('#previous').on('click', () => showPreviousGames());
 	$('#clear').on('click', () => resetBoard());
-	}
+
+}
 
 
 function doTurn(square) {
-		updateState(square)
+		updateState(square);
 		turn++;
 		if (checkWinner() === true) {
 			saveGame();
