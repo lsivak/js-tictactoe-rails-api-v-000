@@ -27,7 +27,7 @@ function updateState() {
   const squares = window.document.querySelectorAll('td');
   square = player(turn);
 var el = document.getElementById("games");
-el.addEventListener("click", () => { updateState(squares); }, false);
+el.addEventListener("click", () => { updateState(squares); }, true);
 
 }
 
