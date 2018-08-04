@@ -28,14 +28,19 @@ function populateBoard(arr) {
 var player = () => turn % 2 ? 'O' : 'X';
 
 function attachListeners() {
-	var el = document.getElementById("squares[i]");
-	el.addEventListener("click", () => { doTurn(player); }, false);
-}
+	var el = document.getElementById("td");
+	el.addEventListener("click", () => { doTurn(square); }, false);
+
+	$('#save').on('click', () => saveGame());
+	$('#previous').on('click', () => showPreviousGames());
+	$('#clear').on('click', () => resetBoard());
+	}
+
 
 function doTurn(square) {
 		updateState(square)
 		turn++;
-		if (checkWinner()) {
+		if (checkWinner() === true) {
 			saveGame();
 			clearBoard();
 	} else	if (turn === 9) {
@@ -49,22 +54,9 @@ function setMessage(message) {
 	document.getElementById('message').innerHTML = message;
  return message
 }
-function updateState() {
-  const squares = window.document.querySelectorAll('td');
-  square = player();
-var el = document.getElementById("games");
-el.addEventListener("click", () => { squares[i].innerHTML= this.player(); }, false);
-
-
-$(document).ready (function () {
-$("saveButton").on("click", function() { 
-  var gameId=parseInt($("saveButton").attr("data-id")) + 1;
-	$.getJSON("/games/" + gameId + ".json", function(data) {
-	$(".state").text(data["state"]);
-	 $("saveButton").attr("data-id", data["id"]);
-})
-})
-})
+function updateState(square) {
+	var token = player()
+$(square).text(token)
 }
 
 function clearBoard() {
@@ -72,16 +64,13 @@ function clearBoard() {
 	turn = 0
 }
 
-$(document).ready(function(){
-    $("clearButton").click(function(){
-			if (!currentGame){
-			clearBoard()
-		} else {
-			$(this.squares[i]).remove
-		}	
-			})    
-	})
-	
+function saveGame() {
+	var games = []
+	 $('td').text((index, square) => {
+		 state.push(games);
+});
+}
+
 function checkWinner() {
 	var win = {}
 	var winner = false;
