@@ -6,6 +6,25 @@ var currentGame = 0
 var turn = 0
 var player = () => turn % 2 ? 'O' : 'X';
 
+$(document).ready(function() {
+  attachListeners();
+});
+
+function doTurn(square) {
+		updateState(square);
+		turn++;
+		if (checkWinner()) {
+			saveGame();
+			clearBoard();
+	} else	if (turn === 9) {
+		message = ('Tie game.');
+		setMessage(message);
+		saveGame();
+		clearBoard()
+}
+}
+
+
 function attachListeners() {
  
  // el.addEventListener("click", function(e) {
@@ -15,35 +34,20 @@ function attachListeners() {
  // 			doTurn(this)
 	// 	});
 	// 	});
-   $('#games').on('click', function() {
-		doTurn(this);
-		})
+	
+	$("td").click(function(event) {	
+	 doTurn(event)	
+ });
 	var el = document.getElementById("#button");
 	$('#save').on('click', () => saveGame());
 	$('#previous').on('click', () => showPreviousGames());
-	$('#clear').on('click', () => resetBoard());
-
+	$('#clear').on('click', () => clearBoard());
 }
 // }
 // })
 // 
-// doTurn(square)
-// }
 
-function doTurn(square) {
-		updateState(square);
-		turn++;
-		if (checkWinner()) {
-			saveGame();
-			clearBoard();
-		
-	} else	if (turn === 9) {
-		message = "Tie game.";
-		setMessage(message);
-		clearBoard()
-		currentGame = 0
-}
-}
+// }
 
 function setMessage(message) {
 	document.getElementById('message').innerHTML = message;
@@ -57,6 +61,7 @@ $(square).text(token)
 function clearBoard() {
 	$('td').remove();
 	turn = 0
+	currentGame = 0
 }
 function gameId() {
 var getGameId = function(event) {	
@@ -80,9 +85,19 @@ if (currentGame) {
 	$.post('/games', gameData, function(game) {
 		currentGame = game.data.id;
 		$('#games').append(`<button id="gameid-${game.data.id}">${game.data.id}</button><br>`)
-		$("#gameid-" + game.data.id).on('click', () => showGame(game))
+		$("#gameid-" + game.data.id).on('click', () => populateBoard(arr))
 	})
 }
+}
+
+function showPreviousGames() {
+	$.getJSON("/games").done(function(response) {	
+	showGames(response.games)
+	})
+}
+
+var showGame = function(game) {	
+  return $('<li>', {'data-state': game.state, 'data-gameid': game.id, text: game.id});	
 }
 	// $("#games").click(function(event) {
 	// 	gameId(event)
@@ -92,9 +107,9 @@ if (currentGame) {
 	// })
 // 
 // }
-function showGame(game) {
-	return $('<li>', {'data-state': game.state, 'data-gameid': game.id, text: game.id})
-}
+// function showGame(game) {
+// 	return $('<li>', {'data-state': game.state, 'data-gameid': game.id, text: game.id})
+// }
 
 function checkWinner() {
 	var win = {}
