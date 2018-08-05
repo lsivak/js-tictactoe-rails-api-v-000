@@ -18,7 +18,7 @@ function attachListeners() {
    $('#games').on('click', function() {
 		doTurn(this);
 		})
-		var el = document.getElementById("#button");
+	var el = document.getElementById("#button");
 	$('#save').on('click', () => saveGame());
 	$('#previous').on('click', () => showPreviousGames());
 	$('#clear').on('click', () => resetBoard());
@@ -36,21 +36,13 @@ function doTurn(square) {
 		if (checkWinner()) {
 			saveGame();
 			clearBoard();
-			resetFixtures()
+		
 	} else	if (turn === 9) {
 		message = "Tie game.";
 		setMessage(message);
 		clearBoard()
 		currentGame = 0
 }
-}
-function resetFixtures() {
-  for (let i = 0; i < 9; i++) {
-    squares[i].innerHTML = '';
-  }
-  window.turn *= 0;
-  messageDiv.innerHTML = '';
-  gamesDiv.innerHTML = '';
 }
 
 function setMessage(message) {
