@@ -91,8 +91,10 @@ if (currentGame) {
 }
 
 function showPreviousGames() {
-	$.getJSON("/games").done(function(response) {	
-	showGames(response.games)
+	$.post('/games', gameData, function(game) {
+		currentGame = game.data.id;
+		$('#games').append(`<button id="gameid-${game.data.id}">${game.data.id}</button><br>`)
+		$("#gameid-" + game.data.id).on('click', () => populateBoard(arr))
 	})
 }
 
