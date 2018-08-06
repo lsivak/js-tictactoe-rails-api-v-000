@@ -91,14 +91,14 @@ if (currentGame) {
 }
 
 function showPreviousGames() {
-	$.post('/games', gameData, function(game) {
+	$.get('/games', function(gameId) {
+
 		currentGame = game.data.id;
 		$('#games').append(`<button id="gameid-${game.data.id}">${game.data.id}</button><br>`)
 		$("#gameid-" + game.data.id).on('click', () => populateBoard(arr))
 	})
-}
 
-var showGame = function(game) {	
+
   return $('<li>', {'data-state': game.state, 'data-gameid': game.id, text: game.id});	
 }
 	// $("#games").click(function(event) {
