@@ -65,7 +65,6 @@ $(square).html(token)
 
 function clearBoard() {
 	$('td').remove();
-  document.getElementById('td').innerHTML = "";
 	turn = 0
 	currentGame = 0
 }
