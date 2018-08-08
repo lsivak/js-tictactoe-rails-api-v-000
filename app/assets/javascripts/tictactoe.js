@@ -14,9 +14,8 @@ function doTurn(event) {
 			saveGame();
 			clearBoard();
 	} else	if (turn === 9) {
-		var message = 'Tie game.';
+	   message = 'Tie game.';
 		setMessage(message);
-    debugger
 		saveGame();
 		clearBoard()
 }
@@ -32,79 +31,68 @@ $("td").click(function(event) {
   });
 $("#save").click(function() {
   saveGame();
-})
+});
 $("#previous").click(function() {
   getPreviousGames();
-})
+});
 $("#clear").click(function() {
   clearBoard();
-})
+});
 }
 
 function setMessage(message) {
-	document.getElementById('message').innerHTML = message;
+	$('#message').text(message);
 
 }
-function updateState(event) {
+function updateState(square) {
+  var token = player();
+    $(square).text(token);
+  }
 
-$(event).html(player())
-debugger
-}
-
-var clearBoard  = function () {
-
+function clearBoard () {
 	$('td').remove();
 }
-function gameId() {
-var getGameId = function(event) {
+
+function gameId(event) {
    $(event.target).data("gameid")
 }
-}
-var saveGame = function() {
-  var url, method;
-  if(currentGame) {
-    url = "/games/" + currentGame
-    method = "PATCH"
+function saveGame() {
+  var state = [];
+  var gameData;
+
+  $('td').text((index, square) => {
+    state.push(square);
+  });
+
+  gameData = { state: state };
+
+  if (currentGame) {
+    $.ajax({
+      type: 'PATCH',
+      url: `/games/${currentGame}`,
+      data: gameData
+    });
   } else {
-    url = "/games"
-    method = "POST"
+    $.post('/games', gameData, function(game) {
+      currentGame = game.data.id;
+      $('#games').append(`<button id="gameid-${game.data.id}">${game.data.id}</button><br>`);
+      $("#gameid-" + game.data.id).on('click', () => populateBoard(arr));
+    });
   }
-   $.ajax({
-    url: url,
-    method: method,
-    dataType: "json",
-    data: {
-      game: {
-        state: {}
-      }
-    },
-    success: function(data) {
-      if(currentGame) {
-        currentGame = data.game.id;
-      } else {
-        currentGame = undefined
-      }
-    }
-  })
-}
-//
-function getPreviousGames(gameId) {
-  const xhr = new XMLHttpRequest;
-  xhr.overrideMimeType('application/json');
-  xhr.open('GET', '/games', true);
-  xhr.onload = () => {
-    const data = JSON.parse(xhr.responseText).data;
-    const id = data.id;
-    const state = data.attributes.state;
-
-
-
-  return $('<li>', {'data-state': game.state, 'data-gameid': game.id, text: game.id},'</li>');
-}
 }
 
 //
+function getPreviousGames() {
 
+  $.get('/games', (game) => {
+    $('#games').append(`<button id="gameid-${game.id}">${game.id}</button><br>`);
+  $(`#gameid-${game.id}`).on('click', () =>  
+
+ game = $('<li>', {'data-state': game.state, 'data-gameid': game.id, text: game.id},'</li>'));
+ return game
+  debugger
+  });
+}
 
 function checkWinner() {
 	var win = {}
