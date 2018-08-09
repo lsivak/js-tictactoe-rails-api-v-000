@@ -54,7 +54,7 @@ return winner;
 
 function attachListeners() {
 $("td").on('click', function() {
-  if (!$.text(this) && setMessage(message) != (`Player ${win[opt[0]]} Won!`) || setMessage(message) != 'Tie game.')
+  if (!$.text(this) && checkWinner() === false)
   doTurn(this)
   });
 $("#save").click(function() {
