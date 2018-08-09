@@ -25,12 +25,12 @@ function doTurn(square) {
 		if (checkWinner()) {
 			saveGame();
 			clearBoard();
-	} else	if (turn === 9 && !checkWinner()) {
+	} else	if (turn === 8 && !checkWinner()) {
      message = 'Tie game.';
    setMessage(message);
 		saveGame();
 		clearBoard()
-} else if (turn < 9) {
+} else if (turn < 8) {
   turn += 1
 }
 }
