@@ -24,23 +24,23 @@ function doTurn(square) {
 		if (checkWinner() === true) {
 			saveGame();
 			clearBoard();
-	} else	if (turn === 9) {
-    tieGame()
+	} else	if (turn === 8 && !checkWinner()) {
+    message = 'Tie game.';
+   setMessage(message);
 		saveGame();
 		clearBoard()
-} else {
+} else if (turn < 9) {
   turn += 1
-  doTurn(square)
 }
 }
 
-function tieGame() {
-  if (!checkWinner() && turn === 9 ) {
-    message = 'Tie game.';
-   setMessage(message);
-  }
-}
- 
+// function tieGame() {
+//   if (!checkWinner() && turn >= 8 ) {
+//     message = 'Tie game.';
+//    setMessage(message);
+//   }
+// }
+
 function checkWinner() {
 	var win = {}
 	var winner = false;
@@ -81,7 +81,6 @@ function setMessage(message) {
 function updateState(square) {
   var token = player();
   $(square).text(token);
-  debugger
 }
 
 function clearBoard () {
@@ -91,7 +90,7 @@ function clearBoard () {
 }
 
 function gameId(event) {
-   $(event.target).data("gameid")
+   $(event.target).data("game.id")
 }
 function saveGame() {
   var state = [];
@@ -111,11 +110,12 @@ function saveGame() {
     });
   } else {
     $.post('/games', gameData, function(game) {
-      currentGame = game.data.id;
+      currentGame = game.id;
       $('#games').append(`<button id="gameid-${game.data.id}">${game.data.id}</button><br>`);
-      $("#gameid-" + game.data.id).on('click', () => reloadGame(game.data.id));
+      $("#gameid-" + game.data.id).on('click', () => getPreviousGames());
     });
   }
+  debugger
 }
 
 //
@@ -123,12 +123,10 @@ function getPreviousGames() {
 
   $.get('/games', (game) => {
     $('#games').append(`<button id="gameid-${game.id}">${game.id}</button><br>`);
-  $(`#gameid-${game.id}`).on('click', () =>  
+  $(`#gameid-${game.id}`).on('click', () =>
 
  game = $('<li>', {'data-state': game.state, 'data-gameid': game.id, text: game.id},'</li>'));
  return game
   debugger
   });
 }
-
-
