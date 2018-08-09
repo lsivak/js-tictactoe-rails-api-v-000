@@ -22,15 +22,15 @@ var player = () => turn % 2 ? 'O' : 'X';
 
 function doTurn(square) {
 		updateState(square);
-		if (checkWinner() === true) {
+		if (checkWinner()) {
 			saveGame();
 			clearBoard();
-	} else	if (turn === 8 && !checkWinner()) {
+	} else	if (turn === 9 && !checkWinner()) {
      message = 'Tie game.';
    setMessage(message);
 		saveGame();
 		clearBoard()
-} else if (turn < 8) {
+} else if (turn < 9) {
   turn += 1
 }
 }
