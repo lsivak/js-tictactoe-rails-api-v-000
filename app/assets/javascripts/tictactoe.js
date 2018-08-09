@@ -29,7 +29,7 @@ function doTurn(square) {
    setMessage(message);
 		saveGame();
 		clearBoard()
-} else if (turn < 9) {
+} else if (turn <= 9) {
   turn += 1
 }
 }
