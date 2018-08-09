@@ -19,7 +19,6 @@ const clearButton = window.document.getElementById('clear');
 
 // Define helper functions
 function resetFixtures() {
-  const squares = window.document.querySelectorAll('td');
   for (let i = 0; i < 9; i++) {
     squares[i].innerHTML = '';
   }

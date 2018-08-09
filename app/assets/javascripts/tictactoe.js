@@ -12,6 +12,7 @@ const gameWinArray = [[0,1,2], [3,4,5], [6,7,8], [0,3,6],
 
 var currentGame = 0
 var turn = 0
+var message = ""
 
 $(document).ready(function() {
   attachListeners();
@@ -25,7 +26,7 @@ function doTurn(square) {
 			saveGame();
 			clearBoard();
 	} else	if (turn === 8 && !checkWinner()) {
-    message = 'Tie game.';
+     message = 'Tie game.';
    setMessage(message);
 		saveGame();
 		clearBoard()
@@ -41,7 +42,7 @@ function checkWinner() {
 
  gameWinArray.some(function(opt) {
 if (win[opt[0]] != "" && win[opt[0]] === win[opt[1]] && win[opt[1]] === win[opt[2]]) {
-var message = (`Player ${win[opt[0]]} Won!`)
+ message = (`Player ${win[opt[0]]} Won!`)
 setMessage(message);
 return winner = true;
 }
@@ -59,7 +60,7 @@ $("#save").click(function() {
   saveGame();
 });
 $("#previous").click(function() {
-  getPreviousGames();
+  showPreviousGames();
 });
 $("#clear").click(function() {
   clearBoard();
@@ -81,14 +82,13 @@ function clearBoard () {
   turn = 0
   currentGame = 0
 }
-
-function gameId(event) {
-   $(event.target).data("game.id")
-}
+//
+// function gameId(event) {
+//    $(event.target).data("game.id")
+// }
 function saveGame() {
   var state = [];
   var gameData;
-
   $('td').text((index, square) => {
     state.push(square);
   });
@@ -103,23 +103,54 @@ function saveGame() {
     });
   } else {
     $.post('/games', gameData, function(game) {
-      currentGame = game.id;
+      currentGame = game.data.id;
       $('#games').append(`<button id="gameid-${game.data.id}">${game.data.id}</button><br>`);
-      $("#gameid-" + game.data.id).on('click', () => getPreviousGames());
+      $("#gameid-" + game.data.id).on('click', () => getPreviousGames(game.data.id));
     });
   }
-  debugger
+debugger
 }
+function showPreviousGames() {
+  $('#games').empty();
+  $.get('/games', (savedGames) => {
+    if (savedGames.data.length) {
+      savedGames.data.forEach(gameButtons);
+    }
 
-//
-function getPreviousGames() {
-
-  $.get('/games', (game) => {
-    $('#games').append(`<button id="gameid-${game.id}">${game.id}</button><br>`);
-  $(`#gameid-${game.id}`).on('click', () =>
-
- game = $('<li>', {'data-state': game.state, 'data-gameid': game.id, text: game.id},'</li>'));
- return game
-  debugger
   });
+}
+function gameButtons(game) {
+  $('#games').append(`<button id="gameid-${game.id}">${game.id}</button><br>`);
+  $(`#gameid-${game.id}`).on('click', () => getPreviousGames(game.id));
+}
+//
+function getPreviousGames(gameId) {
+  document.getElementById('message').innerHTML = '';
+
+  const xhr = new XMLHttpRequest;
+  xhr.overrideMimeType('application/json');
+  xhr.open('GET', '/games', true);
+  xhr.onload = () => {
+    const data = JSON.parse(xhr.responseText).data;
+    const id = data.id;
+    const state = data.attributes.state;
+
+    let index = 0;
+    for (let y = 0; y < 3; y++) {
+      for (let x = 0; x < 3; x++) {
+        document.querySelector(`[data-x="${x}"][data-y="${y}"]`).innerHTML = state[index];
+        index++;
+      }
+    }
+
+    turn = state.join('').length;
+    currentGame = id;
+
+    if (!checkWinner() && turn === 9) {
+      message = 'Tie game.'
+      setMessage(message);
+    }
+  };
+
+  xhr.send(null);
 }
