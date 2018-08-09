@@ -29,17 +29,10 @@ function doTurn(square) {
    setMessage(message);
 		saveGame();
 		clearBoard()
-} else if (turn <= 9) {
+} else if (turn < 8) {
   turn += 1
 }
 }
-
-// function tieGame() {
-//   if (!checkWinner() && turn >= 8 ) {
-//     message = 'Tie game.';
-//    setMessage(message);
-//   }
-// }
 
 function checkWinner() {
 	var win = {}
