@@ -78,14 +78,11 @@ function updateState(square) {
 }
 
 function clearBoard () {
-	$('tbody').empty();
+	$('td').empty();
   turn = 0
   currentGame = 0
 }
-//
-// function gameId(event) {
-//    $(event.target).data("game.id")
-// }
+
 function saveGame() {
   var state = [];
   var gameData;
