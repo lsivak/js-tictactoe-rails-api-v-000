@@ -129,7 +129,7 @@ function getPreviousGames(gameId) {
 
   const xhr = new XMLHttpRequest;
   xhr.overrideMimeType('application/json');
-  xhr.open('GET', '/games', true);
+  xhr.open('GET',`/games/${gameId}`, true);
   xhr.onload = () => {
     const data = JSON.parse(xhr.responseText).data;
     const id = data.id;
