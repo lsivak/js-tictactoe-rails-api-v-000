@@ -54,7 +54,7 @@ return winner;
 
 function attachListeners() {
 $("td").on('click', function() {
-  if (!$.text.window)
+  if (!$.text.square)
   doTurn(this)
   });
 $("#save").click(function() {
